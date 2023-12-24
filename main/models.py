@@ -105,7 +105,7 @@ class Order(models.Model):
     shipping_method = models.ForeignKey(ShippingMethod, 
                                 on_delete=models.CASCADE, null=True) 
     date = models.DateTimeField(default=timezone.now)
-    invoice=models.FileField(upload_to='pdf_invoices/',null=True)
+    invoice=models.FileField(upload_to='client_invoices/',null=True)
     
     
   

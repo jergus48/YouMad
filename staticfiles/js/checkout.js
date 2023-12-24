@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var elements;
     var order_number;
 
-    var stripe = Stripe('pk_test_51LlETOEB7UFpNfHGADCOr9wZRdeSeubpruyJQZowIBB0ExvUnImpDFHSE0IB6kJElzWZlcuqtqRiDx9zAOeCP5c600s3scHR02');
+    var stripe = Stripe('pk_live_51OPW2eEkROwRX2XNhLDXjALxXvVlRWkwBXzE1Z8U30UjOLjeN5xDNQFYWNdD29boSvoMXM2CtKU9U2M2YPHrvyAM00ChdJkLmL');
     function StripeFunction() {
 
         var payButton = document.getElementById("pay-button");
