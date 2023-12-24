@@ -1,0 +1,125 @@
+{% load static %}
+{% block content %}
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <link rel="icon" href="{% static 'images/logoblack.png' %}">
+    <link  rel="shortcut icon" href="{% static 'images/logoblack.png' %}">
+</head>
+
+
+<body>
+    <img class="logo" src="{% static 'images/youmad4.jpg' %}" alt="" data-image-width="3000" data-image-height="3000"
+        data-href="/">
+    <div class="shopping-cart">
+
+        <div class="cart-row">
+            <div class="cart-col-md-8 cart-container">
+                <div class="cart-title">
+                    <div class="cart-row">
+                        <div class="cart-col">
+                            <h4><b>Shopping Cart</b></h4>
+                        </div>
+                        {% if total_items == 1%}
+                        <div class="cart-col">{{total_items}} item</div>
+                        {% else %}
+                        <div class="cart-col">{{total_items}} items</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if cart_items|length > 0 %}
+                {% for item in cart_items %}
+                <table class="cart-table">
+                    <tr class="cart-row">
+                        <td class="cart-col-2 image">
+                            <img class="img-fluid" src="{% static item.image_url %}" alt="Product Image"
+                                style="padding-left: 6px;">
+                        </td>
+                        <td></td>
+                        <td class="cart-col product" colspan="2">
+                            {{item.product}} ({{item.size.size}})
+                        </td>
+
+                        <td class="cart-col quantity">
+                            <a class="decrease-quantity" data-item-id="{{ item.size.id }}"
+                                data-action="decrease">-</a><a class="border"
+                                id="quantity{{item.size.id}}">{{item.quantity}}</a><a class="increase-quantity"
+                                data-item-id="{{ item.size.id }}" data-max-quantity="{{ item.max_quantity }}"
+                                data-action="increase">+</a>
+                        </td>
+                        <td class="cart-col price">&euro; {{item.price}} <span class="cart-close delete"
+                                data-item-id="{{ item.size.id }}" data-action="delete"><button
+                                    class="transparent-btn">&#10006;</button></span></td>
+                    </tr>
+                    <tr class="cart-row-2">
+                        <td class="cart-col-2 empty" style="padding-left: 7px;" colspan="2">
+                            <a class="decrease-quantity" data-item-id="{{ item.size.id }}"
+                                data-action="decrease">-</a><a class="border"
+                                id="quantity{{item.size.id}}">{{item.quantity}}</a><a class="increase-quantity"
+                                data-item-id="{{ item.size.id }}" data-max-quantity="{{ item.max_quantity }}"
+                                data-action="increase">+</a>
+                        </td>
+                        <td class="cart-col-2 price" colspan="2" style="text-align: center;">
+                            &euro; {{item.price}}
+                        </td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+                </table>
+                {% endfor %}
+                {% else%}
+                <h3 style="text-align: center;">The cart is empty, go get some MAD stuff</h3>
+
+                {% endif %}
+                {% if cart_items|length > 0 %} <div class="cart-row"
+                    style="border-top: 3px solid rgba(0,0,0,.1); padding: 0 0;">
+
+                </div>
+                {% endif %}
+
+                <!-- Combine additional cart rows if needed -->
+                <div class="back-to-shop"><a href="/" style="color: black;"><span class="text-muted"> Back to
+                            shop</span></a></div>
+                <div class="col-md-4 summary">
+                    <div>
+                        <h5><b>Summary</b></h5>
+                    </div>
+                    <!--form>
+                        <p>SHIPPING</p>
+                        <select><option class="text-muted">Standard-Delivery- &euro;5.00</option></select>
+                        <p>GIVE CODE</p>
+                        <input id="code" placeholder="Enter your code">
+                    </form-->
+                    <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                        <div class="prices_container">
+                            <div style="padding: 2px;display: flex; justify-content: space-between;">
+                                <div class="col">TOTAL PRICE</div>
+                                <div class="col text-right">&euro; {{total_price}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% if cart_items|length > 0 %}
+                    <a href="/checkout/"><button class="btn">CHECKOUT</button></a>{% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static '/js/cart.js' %}"></script>
+{% endblock %}

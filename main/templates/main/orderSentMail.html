@@ -1,0 +1,143 @@
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Inconsolata:wght@300;500&family=Oswald:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Inconsolata:wght@300;500&family=Oswald:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Inconsolata:wght@300;500&family=Kanit:wght@300&family=Oswald:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Hedvig+Letters+Sans&family=Inconsolata:wght@300;500&family=Kanit:wght@300&family=Oswald:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Bebas+Neue&family=Hedvig+Letters+Sans&family=Inconsolata:wght@300;500&family=Kanit:wght@300&family=Oswald:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Bebas+Neue&family=Fjalla+One&family=Hedvig+Letters+Sans&family=Inconsolata:wght@300;500&family=Kanit:wght@300&family=Oswald:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Agbalumo&family=Bebas+Neue&family=Fjalla+One&family=Hedvig+Letters+Sans&family=Inconsolata:wght@300;500&family=Kanit:wght@300&family=Oswald:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Kanit', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    }
+
+    h1 {
+      color: #000;
+      font-family: 'Russo One', sans-serif;
+    }
+
+    p {
+      font-family: 'Kanit', sans-serif;
+      color: #242424;
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    img {
+      width: 15%;
+      text-align: center;
+    }
+
+    .link {
+      border-radius: 20px;
+      padding: 10px;
+      width: fit-content;
+      background: rgba(236, 236, 236, 0.327);
+      box-shadow: 0px 4px 4px rgba(9, 9, 9, 0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .link button {
+      border-color: transparent;
+      background: transparent;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .link:hover button {
+      transform: scale(1.05);
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+
+    .end {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .back {
+      color: #000;
+      font-family: 'hedvig Letters Sans', sans-serif;
+    }
+
+    td {
+      font-family: 'Kanit';
+      text-align: center;
+    }
+
+    .timage {
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>Your Mad order was sent!</h1>
+    <p>Order #{{order.id}}</p>
+    <p>Dear {{order.customer_first_name}}, we are happy to inform you that  your order was sent.</p>
+    <p>  You can expect your delivery in {{order.shipping_method.delivery_time}}.</p>
+    
+
+
+    
+    <br>
+    <div class="end">
+      <p style="width: fit-content;">Best regards,<br><a href="https://2madcloth./">2madcloth</a></p>
+
+    </div>
+
+
+  </div>
+</body>
+
+</html>
+{% endblock %}

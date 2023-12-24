@@ -1,0 +1,97 @@
+{% load static %}
+{% block content %}
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" href="{% static 'images/logoblack.png' %}">
+    <link  rel="shortcut icon" href="{% static 'images/logoblack.png' %}">
+</head>
+
+<body>
+    <div class="card">
+        <div class="row">
+            <div class="col-md-8 cart">
+                <div class="title">
+                    <div class="row">
+                        <div class="col">
+                            <h4><b>Congratulations {{order.customer_first_name}} for making this order.</b></h4>
+                        </div>
+                        <div class="col align-self-center text-right text-muted">Order Number #{{order.id}}</div>
+                    </div>
+                </div>
+
+                {% for product in order_items %}
+                <div class="row border-top border-bottom main align-items-center">
+                    <div class="col-2"><img class="img-fluid" src="{% static product.image %}"></div>
+                    <div class="col">
+                        <div class="row">{{product.product_and_size.product.name}} ({{product.product_and_size.size}})
+                        </div>
+                    </div>
+                    <div class="col">
+                        <a class="border" id="quantity{{item.size.id}}">{{product.quantity}}</a>
+                    </div>
+                    <div class="col">&euro;{{product.price}} </div>
+
+                </div>
+                {% endfor %}
+
+                <div class="row" style="border-top: 3px solid rgba(0,0,0,.1); padding: 2vh 0;"></div>
+                <div class="back-to-shop"><a href="/" style="color:black;"><span class="text-muted"> Back to
+                            shop</span></a></div>
+            </div>
+            <div class="col-md-4 summary">
+                <div>
+                    <h5><b>Summary</b></h5>
+                </div>
+                <!--form>
+                    <p>SHIPPING</p>
+                    <select><option class="text-muted">Standard-Delivery- &euro;5.00</option></select>
+                    <p>GIVE CODE</p>
+                    <input id="code" placeholder="Enter your code">
+                </form-->
+                <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                    <div class="prices_container">
+                        <div style="padding: 2px;display: flex; justify-content: space-between;">
+                            <div class=" col">PRICE OF SHIPPING</div>
+                            <div class="col text-right">&euro; {{shipping_method.price}}</div>
+                        </div>
+                        <div style="padding: 2px;display: flex; justify-content: space-between;">
+                            <div class="col">TOTAL PRICE</div>
+                            <div class="col text-right">&euro; {{total_price}}</div>
+                        </div>
+                    </div>
+
+                </div>
+                {% if cart_items|length > 0 %}
+                <a href="/checkout/"><button class="btn">CHECKOUT</button></a>{% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var currentUrl = window.location.href;
+       
+        if (currentUrl.includes('?')) {
+            var baseUrl = currentUrl.split('?')[0];
+            window.location.href = baseUrl;
+        }
+    
+    });
+</script>
+{% endblock %}

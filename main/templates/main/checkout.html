@@ -1,0 +1,122 @@
+{% load static %}
+{% block content %}
+
+<body>
+
+
+
+
+
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" href="{% static 'images/logoblack.png' %}">
+    <link rel="shortcut icon" href="{% static 'images/logoblack.png' %}">
+  </head>
+
+  <body>
+
+    <div class="card">
+      <div class="row">
+        <div class="col-md-8 cart">
+          <div class="title">
+            <div class="row">
+              <div class="col">
+                <h4><b id="header">Checkout</b></h4>
+              </div>
+
+            </div>
+          </div>
+          <form id="payment-form">
+            {% csrf_token %}
+            <div id="informationsDiv">
+              <input type="email" id="email" name="mail" placeholder="email" required>
+
+              <input type="text" name="firstname" placeholder="first name" required data-required="true">
+              <input type="text" name="lastname" placeholder="last name" required data-required="true">
+              <input type="text" name="city" placeholder="city" required data-required="true">
+              <input type="text" name="street" placeholder="street" required data-required="true">
+              <input type="text" name="postalcode" placeholder="postal code" required data-required="true">
+              <input type="tel" name="phone" placeholder="phone" required data-required="true">
+              <select name="country" id="country">
+
+              </select>
+              <select name="shipping_method" id="shipping_method"></select>
+
+            </div>
+            <div id="paymentDiv" style="display: none;">
+              <div id="link-authentication-element">
+                <!--Stripe.js injects the Link Authentication Element-->
+              </div>
+              <div id="payment-element">
+                <!--Stripe.js injects the Payment Element-->
+              </div>
+
+
+              <div id="payment-message" class="hidden"></div>
+            </div>
+          </form>
+          <div class="row" style="border-top: 3px solid rgba(0,0,0,.1); padding: 2vh 0;"></div>
+          <div class="back-to-shop" id="back-to-cart"><a href="/cart/"><span class="text-muted"
+                style="color: black;">Back to
+                cart</span></a></div>
+          <div class="back-to-shop" id="back-to-checkout" style="display:none;cursor:pointer;"><a id="back"
+              style="color: black;text-decoration: underline;"><span class="text-muted">Back to Checkout</span></a>
+          </div>
+        </div>
+        <div class="col-md-4 summary">
+          <div>
+            <h5><b>Summary</b></h5>
+          </div>
+          <!--form>
+                    <p>SHIPPING</p>
+                    <select><option class="text-muted">Standard-Delivery- &euro;5.00</option></select>
+                    <p>GIVE CODE</p>
+                    <input id="code" placeholder="Enter your code">
+                </form-->
+
+          <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+            <div class="prices_container">
+              <div style="padding: 2px;display: flex; justify-content: space-between;">
+                <div class="col">PRICE OF PRODUCTS</div>
+                <div class="col text-right">&euro; <span id="price_products">{{ price }}</span></div>
+              </div>
+              <div style="padding: 2px;display: flex; justify-content: space-between;"">
+              <div class=" col">PRICE OF SHIPPING</div>
+              <div class="col text-right">&euro; <span id="price_shipping"></span></div>
+            </div>
+            <div style="padding: 2px; display: flex; justify-content: space-between;"">
+              <div class=" col">TOTAL PRICE</div>
+            <div class="col text-right">&euro; <span id="price"></span></div>
+          </div>
+        </div>
+
+
+      </div>
+      <button id="continue" type="button" class="btn">continue to payment</button>
+      {% if price > 0%}
+      <button id="pay-button" class="btn" style="display:none; margin-top: 30px">
+
+        Pay now
+
+      </button> {% endif %}
+
+    </div>
+    </div>
+    </div>
+  </body>
+
+  </html>
+
+
+
+
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="{% static 'js/checkout.js' %}"> </script>
+  {% endblock %}
