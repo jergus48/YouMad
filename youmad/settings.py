@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2es$lsws1k3v+*_2tc+*ainaip7dv1---tpa6ijouo_!sv1!oi'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['51.20.129.77', 'youmadclo.com', 'www.youmadclo.com']
 
 
 # Application definition
@@ -131,7 +132,7 @@ EMAIL_HOST_PASSWORD = 'yvvmpycwbiyqptaa'
 
 
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,'static'),
 )
@@ -153,8 +154,8 @@ LOGOUT_REDIRECT_URL = "/"
 
 
 
-STRIPE_SECRET_KEY="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"
-STRIPE_PUBLIC_KEY="pk_live_51OPW2eEkROwRX2XNhLDXjALxXvVlRWkwBXzE1Z8U30UjOLjeN5xDNQFYWNdD29boSvoMXM2CtKU9U2M2YPHrvyAM00ChdJkLmL"
+STRIPE_SECRET_KEY=config('STRIPE_SECRET_KEY')
+STRIPE_PUBLIC_KEY=config('STRIPE_PUBLIC_KEY')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
