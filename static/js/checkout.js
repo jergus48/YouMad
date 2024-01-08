@@ -211,15 +211,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     payButton.addEventListener('click', async function () {
-        console.log("submit")
+
         payButton.disabled = true
 
         var formData = new FormData(document.getElementById("payment-form"));
         formData.append("order_number", order_number);
-        let run = true
-        console.log(order_number);
-        console.log('Before stripe.confirmPayment');
-        var url = 'https://youmadclo/succesful-order/' + order_number + '/'
+
+
+        const params = new URLSearchParams();
+        for (const pair of formData.entries()) {
+            params.append(pair[0], pair[1]);
+        }
+
+        // Construct the final URL
+        const url = 'https://youmadclo.com/control-order/?' + params.toString();
+
         stripe.confirmPayment({
             elements,
             confirmParams: {
@@ -231,34 +237,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (result.error) {
                 console.log("error")
                 payButton.disabled = false
-                run = false
+
 
 
 
             }
         });
 
-
-        console.log(run)
-        setTimeout(function () {
-            if (run == true) {
-                console.log("Creating order...");
-                fetch("/create-order/", {
-                    method: "POST",
-                    body: formData,
-
-                })
-                    .then((response) => {
-                        return response.json();
-                    })
-                    .then((data) => {
-                        // window.location.href = "/succesful-order/" + data.order + "/";
-                    })
-                    .catch((error) => {
-                        console.error("There was a problem with the fetch operation:", error);
-                    });
-            };
-        }, 300);
 
 
 

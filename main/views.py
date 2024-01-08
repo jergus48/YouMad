@@ -389,7 +389,12 @@ def Charge(request):
         customer=customer,  # Use the customer identifier to associate with the customer
         automatic_payment_methods={'enabled': True}
     )
-    
+    if 'client_secret' not in request.session:
+     
+        request.session['client_secret'] = payment_intent.client_secret
+    else:
+        
+        request.session['client_secret'] = payment_intent.client_secret
     return JsonResponse({'client_secret': payment_intent.client_secret,'order_number':order_number})
 
 
@@ -428,23 +433,42 @@ def confirmation_mail(order,mail):
         html_message=html_message,
     )   
    
-
+def OrderControl(request):
+    if 'client_secret'  in request.session:
+        intent=request.session['client_secret']
+    else:
+        intent=""
+    
+    if request.GET:
+        if request.GET.get('payment_intent_client_secret') == intent:
+        
+            try:
+            # Call the CreateOrder function with the request.GET parameters
+                order_number=request.GET.get('order_number')
+                CreateOrder(request)
+                print("Order created successfully")
+                return HttpResponseRedirect('/succesful-order/' + str(order_number) + '/')
+            except Exception as e:
+                print(f"Error creating order: {e}")
+                return JsonResponse({"status": "Error creating order: contact support"})
+    else:
+        return JsonResponse({"status": "Error creating order: contact support"})
 def CreateOrder(request):
  
-    mail = request.POST.get('mail')
-    country = request.POST.get('country')
+    mail = request.GET.get('mail')
+    country = request.GET.get('country')
     
-    shipping_name=request.POST.get('shipping_method')
+    shipping_name=request.GET.get('shipping_method')
     country_id= Shipping.objects.get(country=country)
     shipping_method = ShippingMethod.objects.get(country=country_id,name=shipping_name)
     
-    first_name = request.POST.get('firstname')
-    last_name = request.POST.get('lastname')
-    city = request.POST.get('city')
-    street = request.POST.get('street')
-    postal_code = request.POST.get('postalcode')
-    phone = request.POST.get('phone')
-    order_number=request.POST.get('order_number')
+    first_name = request.GET.get('firstname')
+    last_name = request.GET.get('lastname')
+    city = request.GET.get('city')
+    street = request.GET.get('street')
+    postal_code = request.GET.get('postalcode')
+    phone = request.GET.get('phone')
+    order_number=request.GET.get('order_number')
     
     order=Order.objects.get(id=order_number)
     
@@ -476,15 +500,16 @@ def CreateOrder(request):
     if 'order_number' in request.session:
         del request.session['order_number']
         request.session.modified = True
+    if 'client_secret' in request.session:
+        del request.session['client_secret']
+        request.session.modified = True
     if 'cart' in request.session:
         del request.session['cart']
-
         request.session.modified = True
-
 
     confirmation_mail(order,mail)
     invoice(order)
-    return JsonResponse({"succes":True})
+    print(order_number)
 def cart_control(request):
     
     cart = request.session.get('cart', {})
