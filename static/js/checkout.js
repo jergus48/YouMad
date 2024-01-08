@@ -22,14 +22,23 @@ document.addEventListener('DOMContentLoaded', function () {
         continueButton.disabled = !allFieldsFilled;
     }
     continueButton.addEventListener('click', function () {
-        informationsDiv.style.display = "none";
-        paymentDiv.style.display = "block";
-        header.textContent = "Payment";
-        payButton.style.display = "block";
-        continueButton.style.display = "none";
-        backToCart.style.display = "none";
-        backToCheckout.style.display = "block";
-        StripeFunction();
+        var emailInput = document.getElementById('email').value;
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput)) {
+            phoneError.textContent = 'Please enter a valid email adress.';
+
+
+        } else {
+            phoneError.textContent = ""
+            informationsDiv.style.display = "none";
+            paymentDiv.style.display = "block";
+            header.textContent = "Payment";
+            payButton.style.display = "block";
+            continueButton.style.display = "none";
+            backToCart.style.display = "none";
+            backToCheckout.style.display = "block";
+            StripeFunction();
+        }
     });
     backButton.addEventListener('click', function () {
         informationsDiv.style.display = "block";

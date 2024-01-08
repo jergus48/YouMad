@@ -13,10 +13,10 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Shopping Cart</title>
+    <title>Checkout | YOUMAD</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" href="{% static 'images/logoblack.png' %}">
-    <link rel="shortcut icon" href="{% static 'images/logoblack.png' %}">
+    <link  rel="shortcut icon" href="{% static 'images/logoblack.png' %}">
   </head>
 
   <body>
@@ -99,6 +99,7 @@
 
       </div>
       <button id="continue" type="button" class="btn">continue to payment</button>
+      <div id="phoneError" class="error-message" style="color: red; margin-top:1em;"></div>
       {% if price > 0%}
       <button id="pay-button" class="btn" style="display:none; margin-top: 30px">
 
