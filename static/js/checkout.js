@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         // Construct the final URL
-        const url = 'https://youmadclo.com/control-order/?' + params.toString();
+        const url = 'https://youmadclo.com/create-order/?' + params.toString();
 
         stripe.confirmPayment({
             elements,

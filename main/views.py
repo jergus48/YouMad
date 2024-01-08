@@ -433,7 +433,27 @@ def confirmation_mail(order,mail):
         html_message=html_message,
     )   
    
-def OrderControl(request):
+# def OrderControl(request):
+#     if 'client_secret'  in request.session:
+#         intent=request.session['client_secret']
+#     else:
+#         intent=""
+    
+#     if request.GET:
+#         if request.GET.get('payment_intent_client_secret') == intent:
+        
+#             try:
+#             # Call the CreateOrder function with the request.GET parameters
+#                 order_number=request.GET.get('order_number')
+#                 CreateOrder(request)
+#                 print("Order created successfully")
+#                 return HttpResponseRedirect('/succesful-order/' + str(order_number) + '/')
+#             except Exception as e:
+#                 print(f"Error creating order: {e}")
+#                 return JsonResponse({"status": "Error creating order: contact support"})
+#     else:
+#         return JsonResponse({"status": "Error creating order: contact support"})
+def CreateOrder(request):
     if 'client_secret'  in request.session:
         intent=request.session['client_secret']
     else:
@@ -441,75 +461,61 @@ def OrderControl(request):
     
     if request.GET:
         if request.GET.get('payment_intent_client_secret') == intent:
-        
-            try:
-            # Call the CreateOrder function with the request.GET parameters
-                order_number=request.GET.get('order_number')
-                CreateOrder(request)
-                print("Order created successfully")
-                return HttpResponseRedirect('/succesful-order/' + str(order_number) + '/')
-            except Exception as e:
-                print(f"Error creating order: {e}")
-                return JsonResponse({"status": "Error creating order: contact support"})
-    else:
-        return JsonResponse({"status": "Error creating order: contact support"})
-def CreateOrder(request):
- 
-    mail = request.GET.get('mail')
-    country = request.GET.get('country')
-    
-    shipping_name=request.GET.get('shipping_method')
-    country_id= Shipping.objects.get(country=country)
-    shipping_method = ShippingMethod.objects.get(country=country_id,name=shipping_name)
-    
-    first_name = request.GET.get('firstname')
-    last_name = request.GET.get('lastname')
-    city = request.GET.get('city')
-    street = request.GET.get('street')
-    postal_code = request.GET.get('postalcode')
-    phone = request.GET.get('phone')
-    order_number=request.GET.get('order_number')
-    
-    order=Order.objects.get(id=order_number)
-    
-    order.mail=mail
-    order.status_ordered=True
-    order.customer_first_name=first_name
-    order.customer_last_name=last_name
-    order.country=country
-    order.phone=phone
-    order.city=city
-    order.street=street
-    order.zip_address=postal_code
-    order.shipping_method=shipping_method
-    
-    
-    # delete items from cart
-    cart = request.session.get('cart', {})
-    order_items = []
-    for size_id, Quantity in cart.items():
-        
-        size = Size.objects.get(id=size_id)
-        order_items.append(OrderItem(order=order, product_and_size=size, quantity=Quantity))
-        size.quantity-=Quantity
-        size.save()
+            mail = request.GET.get('mail')
+            country = request.GET.get('country')
+            
+            shipping_name=request.GET.get('shipping_method')
+            country_id= Shipping.objects.get(country=country)
+            shipping_method = ShippingMethod.objects.get(country=country_id,name=shipping_name)
+            
+            first_name = request.GET.get('firstname')
+            last_name = request.GET.get('lastname')
+            city = request.GET.get('city')
+            street = request.GET.get('street')
+            postal_code = request.GET.get('postalcode')
+            phone = request.GET.get('phone')
+            order_number=request.GET.get('order_number')
+            
+            order=Order.objects.get(id=order_number)
+            
+            order.mail=mail
+            order.status_ordered=True
+            order.customer_first_name=first_name
+            order.customer_last_name=last_name
+            order.country=country
+            order.phone=phone
+            order.city=city
+            order.street=street
+            order.zip_address=postal_code
+            order.shipping_method=shipping_method
+            
+            
+            # delete items from cart
+            cart = request.session.get('cart', {})
+            order_items = []
+            for size_id, Quantity in cart.items():
+                
+                size = Size.objects.get(id=size_id)
+                order_items.append(OrderItem(order=order, product_and_size=size, quantity=Quantity))
+                size.quantity-=Quantity
+                size.save()
 
-    OrderItem.objects.bulk_create(order_items)
-    order.order_price=order_price.calculate(order_items,shipping_method)
-    order.save()    
-    if 'order_number' in request.session:
-        del request.session['order_number']
-        request.session.modified = True
-    if 'client_secret' in request.session:
-        del request.session['client_secret']
-        request.session.modified = True
-    if 'cart' in request.session:
-        del request.session['cart']
-        request.session.modified = True
+            OrderItem.objects.bulk_create(order_items)
+            order.order_price=order_price.calculate(order_items,shipping_method)
+            order.save()    
+            if 'order_number' in request.session:
+                del request.session['order_number']
+                request.session.modified = True
+            if 'client_secret' in request.session:
+                del request.session['client_secret']
+                request.session.modified = True
+            if 'cart' in request.session:
+                del request.session['cart']
+                request.session.modified = True
 
-    confirmation_mail(order,mail)
-    invoice(order)
-    print(order_number)
+            confirmation_mail(order,mail)
+            invoice(order)
+            return HttpResponseRedirect('/succesful-order/' + str(order_number) + '/')
 def cart_control(request):
     
     cart = request.session.get('cart', {})
