@@ -243,7 +243,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
             
             {% for product in products%}
             <a href="/products-{{product.id}}/">
-            <div class="u-container-align-center-md u-container-align-center-sm u-container-align-center-xs u-container-style u-hover-feature u-list-item u-repeater-item u-list-item-1" data-href="Jeans.html" data-animation-name="customAnimationIn" data-animation-duration="1000">
+            <div class="u-container-align-center-md u-container-align-center-sm u-container-align-center-xs u-container-style u-hover-feature u-list-item u-repeater-item u-list-item-1" data-href="/products-{{product.id}}/" data-animation-name="customAnimationIn" data-animation-duration="1000">
               <div class="u-container-layout u-similar-container u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-container-layout-1">
                 <img class="custom-expanded u-align-center-md u-align-center-sm u-align-center-xs u-hover-feature u-image u-image-default u-image-1" src="{% static product.image.images.url %}" data-image-width="595" data-image-height="736">
                 <div class="u-container-style u-group u-shape-rectangle u-group-1">
@@ -263,7 +263,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
           <div class="u-repeater u-repeater-2" style="color:black;">
             {% for product in products %}
                   {% if forloop.counter|divisibleby:2 %}
-            <div class="u-container-style u-custom-item u-list-item u-repeater-item u-shape-rectangle u-list-item-5" data-animation-name="customAnimationIn" data-animation-duration="1000" data-href="Jeans.html">
+            <div class="u-container-style u-custom-item u-list-item u-repeater-item u-shape-rectangle u-list-item-5" data-animation-name="customAnimationIn" data-animation-duration="1000" data-href="/products-{{product.id}}/">
               <div class="u-container-layout u-similar-container u-container-layout-9">
                 <img class="u-align-center-xs u-expanded-width-xs u-image u-image-default u-image-5" src="{% static product.image.images.url %}" alt="" data-image-width="800" data-image-height="871">
                 <p class="u-align-left-xs u-custom-font u-heading-font u-text u-text-default-xs u-text-9" style="color:black;">{{product.name}}</p>
@@ -271,7 +271,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
               </div>
             </div>
             {% else %}
-            <div class="u-container-style u-custom-item u-list-item u-repeater-item u-shape-rectangle u-list-item-6" data-animation-name="customAnimationIn" data-animation-duration="1000" data-href="Jeans.html">
+            <div class="u-container-style u-custom-item u-list-item u-repeater-item u-shape-rectangle u-list-item-6" data-animation-name="customAnimationIn" data-animation-duration="1000" data-href="/products-{{product.id}}/">
               <div class="u-container-layout u-similar-container u-container-layout-10">
                 <img class="u-align-center-xs u-expanded-width-xs u-image u-image-default u-image-6" src="{% static product.image.images.url %}" alt="" data-image-width="595" data-image-height="736">
                 <p class="u-align-left-xs u-custom-font u-heading-font u-text u-text-default-xs u-text-11" style="color:black;">{{product.name}}</p>
@@ -303,7 +303,7 @@ c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,24
               </div>
               <div class="u-align-left u-container-style u-layout-cell u-right-cell u-size-40 u-layout-cell-2">
                 <div class="u-container-layout u-container-layout-2">
-                  <img class="custom-expanded u-align-center u-image u-image-circle u-image-contain u-preserve-proportions u-image-1" src="images/youmad4.jpg" alt="" data-image-width="3000" data-image-height="3000">
+			<img class="custom-expanded u-align-center u-image u-image-circle u-image-contain u-preserve-proportions u-image-1" src="{% static 'images/youmad4.jpg' %}" alt="" data-image-width="3000" data-image-height="3000">
                   <div class="u-clearfix u-expanded-width u-group-elements u-group-elements-1">
                     <div class="u-clearfix u-expanded-width u-group-elements u-group-elements-2"></div>
                     <h2 class="u-align-left u-custom-font u-text u-text-1">FOLLOW US !<br>

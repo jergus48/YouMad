@@ -51,7 +51,7 @@ class IndexView(View):
             except:
                 pass
            
-     
+
         slider=Slider.objects.all()[0]
         slides=Slide.objects.filter(slider=slider)
         slider.first_slide=slides[0]
@@ -475,9 +475,11 @@ def CreateOrder(request):
     order.save()    
     if 'order_number' in request.session:
         del request.session['order_number']
+        request.session.modified = True
+    
     if 'cart' in request.session:
         del request.session['cart']
-    request.session.modified = True
+        request.session.modified = True
 
     confirmation_mail(order,mail)
     invoice(order)

@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let run = true
         console.log(order_number);
         console.log('Before stripe.confirmPayment');
-        var url = 'http://127.0.0.1:8000/succesful-order/' + order_number + '/'
+        var url = 'https://youmadclo/succesful-order/' + order_number + '/'
         stripe.confirmPayment({
             elements,
             confirmParams: {
